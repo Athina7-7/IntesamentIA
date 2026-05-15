@@ -1,4 +1,4 @@
-# review_routes.py: Define los endpoints HTTP de la API de EmoReview
+# review_routes.py: Define los endpoints HTTP de la API de IntesamentIA
 # FastAPI usa decoradores (@router.get, @router.post) para asociar funciones a rutas
 
 from fastapi import APIRouter, HTTPException

@@ -1,6 +1,6 @@
-# EmoReview – Frontend Angular
+# IntesamentIA – Frontend Angular
 
-Interfaz web del sistema EmoReview. Consume la API REST del backend FastAPI.
+Interfaz web del sistema IntesamentIA. Consume la API REST del backend FastAPI.
 
 ## Comandos
 

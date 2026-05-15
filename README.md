@@ -76,7 +76,7 @@ El sistema tiene dos capas independientes que se comunican via HTTP:
 ### Dataset
 
 - **Nombre**: SST-2 (Stanford Sentiment Treebank, versión 2)
-- **Fuente**: `huggingface.co/datasets/glue` → split `sst2`
+- **Fuente**: `https://huggingface.co/datasets/nyu-mll/glue/viewer/sst2` 
 - **Contenido**: Reseñas de películas en inglés etiquetadas como positivas (1) o negativas (0)
 - **Total de datos de validación**: ~872 ejemplos (split oficial de validación del benchmark GLUE)
 - **Uso en este proyecto**: 100 ejemplos de validación para evaluar el modelo en el endpoint `/evaluation`

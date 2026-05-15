@@ -1,4 +1,4 @@
-# Configuración central de la aplicación EmoReview
+# Configuración central de la aplicación IntesamentIA
 # Aquí se definen constantes reutilizables en todo el backend
 
 # Nombre del modelo preentrenado de Hugging Face para análisis de sentimiento

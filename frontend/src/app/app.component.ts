@@ -15,5 +15,5 @@ import { ReviewAnalyzerComponent } from './features/review-analyzer/review-analy
   `]
 })
 export class AppComponent {
-  title = 'EmoReview';
+  title = 'IntesamentIA';
 }

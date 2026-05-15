@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script para levantar el backend de EmoReview
+# Script para levantar el backend de IntesamentIA
 
 # Activar el entorno virtual (Linux/Mac)
 source venv/bin/activate
