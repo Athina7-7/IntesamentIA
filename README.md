@@ -181,6 +181,8 @@ EmoReview demuestra que es posible construir un sistema funcional de análisis d
 
 ## 8. Instalación
 
+Se recomienda la versión de python 3.10.x, para evitar conflictos con las librerias necesarias
+
 ### Requisitos previos
 - Python 3.10 o superior
 - Node.js 18+ y npm

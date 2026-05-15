@@ -7,6 +7,7 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.python-version
 
 # Virtual Environment
 venv/
@@ -23,5 +24,6 @@ ENV/
 .DS_Store
 Thumbs.db
 
+# Angular
 .angular/
 node_modules/
