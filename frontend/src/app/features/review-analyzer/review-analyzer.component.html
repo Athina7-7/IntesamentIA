@@ -1,4 +1,4 @@
-<!-- review-analyzer.component.html: Plantilla del componente principal de EmoReview -->
+<!-- review-analyzer.component.html: Plantilla del componente principal de IntensamentIA -->
 
 <div class="analyzer-container">
 
@@ -34,7 +34,7 @@
         (click)="analyzeReview()"
         [disabled]="isLoading"
       >
-        <span *ngIf="!isLoading">🔍 Analizar reseña</span>
+        <span *ngIf="!isLoading"> Analizar reseña</span>
         <span *ngIf="isLoading" class="loading-text">
           <span class="spinner"></span> Analizando...
         </span>
@@ -97,13 +97,13 @@
 
     <!-- Sección de explicación generada por el backend -->
     <div class="explanation-card">
-      <div class="section-label">💡 Explicación del análisis</div>
+      <div class="section-label"> Explicación del análisis</div>
       <p class="explanation-text">{{ analysisResult.explanation }}</p>
     </div>
 
     <!-- Texto limpiado -->
     <div class="cleaned-text-card">
-      <div class="section-label">🔧 Texto procesado por el modelo</div>
+      <div class="section-label">Texto procesado por el modelo</div>
       <p class="cleaned-text">{{ analysisResult.cleaned_text }}</p>
     </div>
 
@@ -111,7 +111,7 @@
 
   <!-- ===== INFORMACIÓN DEL DATASET ===== -->
   <section class="dataset-section">
-    <div class="section-label">📊 Dataset utilizado</div>
+    <div class="section-label"> Dataset utilizado</div>
     <div class="dataset-grid">
       <div class="dataset-item">
         <span class="dataset-key">Nombre</span>

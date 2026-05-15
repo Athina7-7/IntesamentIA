@@ -33,7 +33,7 @@ def startup_event():
     """Carga los modelos de Hugging Face en memoria al iniciar el servidor."""
     print("Cargando modelos de Hugging Face... (puede tardar la primera vez)")
     load_models()
-    print("Modelos cargados correctamente. EmoReview API lista.")
+    print("Modelos cargados correctamente. IntensamentIA  lista.")
 
 
 # Incluir el router de reseñas con todas sus rutas (/api/reviews/analyze, etc.)
@@ -43,4 +43,4 @@ app.include_router(review_router)
 # Ruta raíz para verificar que el servidor está corriendo
 @app.get("/")
 def root():
-    return {"message": "EmoReview API funcionando correctamente"}
+    return {"message": "IntensamentIA API funcionando correctamente"}
