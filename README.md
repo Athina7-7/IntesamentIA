@@ -1,4 +1,4 @@
-# EmoReview
+# Review
 ### Analizador inteligente de emociones y sentimiento en reseñas
 
 ---
@@ -13,7 +13,7 @@ Las empresas reciben miles de reseñas de clientes a diario. Analizarlas manualm
 
 ## 2. Objetivo General
 
-Desarrollar una aplicación web llamada **EmoReview** que, mediante modelos preentrenados de Hugging Face, analice automáticamente el **sentimiento** (positivo, negativo, neutral) y la **emoción dominante** (alegría, tristeza, enojo, miedo, sorpresa, etc.) de reseñas escritas por usuarios, mostrando los resultados de forma visual e intuitiva.
+Desarrollar una aplicación web llamada **IntesamentIA** que, mediante modelos preentrenados de Hugging Face, analice automáticamente el **sentimiento** (positivo, negativo, neutral) y la **emoción dominante** (alegría, tristeza, enojo, miedo, sorpresa, etc.) de reseñas escritas por usuarios, mostrando los resultados de forma visual e intuitiva.
 
 ---
 
@@ -28,7 +28,7 @@ flowchart TD
     C --> D[ Limpieza básica del texto]
     D --> E{ Procesamiento paralelo con ThreadPoolExecutor}
     E --> F[ Análisis de Sentimiento\ndistilbert-sst2]
-    E --> G[ Análisis de Emociones\nemotion-distilroberta]
+    E --> G[ Análisis de emociones\ntion-distilroberta]
     F --> H[ Resultado: positivo/negativo/neutral + scores]
     G --> I[ Resultado: alegría/enojo/tristeza + scores]
     H --> J[ Generación de explicación]
@@ -53,7 +53,7 @@ El sistema tiene dos capas independientes que se comunican via HTTP:
 - `main.py` inicia FastAPI, configura CORS y carga los modelos al arrancar
 - `model_loader.py` descarga y almacena los modelos Hugging Face en memoria
 - `review_analysis_service.py` coordina el flujo con paralelismo
-- `sentiment_service.py` y `emotion_service.py` ejecutan inferencia con cada modelo
+- `sentiment_service.py` y `tion_service.py` ejecutan inferencia con cada modelo
 - `explanation_service.py` genera texto explicativo con plantillas
 - `dataset_service.py` evalúa el modelo sobre el dataset SST-2
 
@@ -69,7 +69,7 @@ El sistema tiene dos capas independientes que se comunican via HTTP:
 | Tarea | Modelo | Clases |
 |-------|--------|--------|
 | Sentimiento | `distilbert-base-uncased-finetuned-sst-2-english` | POSITIVE, NEGATIVE |
-| Emociones | `j-hartmann/emotion-english-distilroberta-base` | joy, anger, sadness, fear, surprise, disgust, neutral |
+| Emociones | `j-hartmann/tion-english-distilroberta-base` | joy, anger, sadness, fear, surprise, disgust, neutral |
 
 **Los modelos están en inglés.** Se recomienda escribir las reseñas en inglés para mejores resultados.
 
@@ -90,7 +90,7 @@ En `review_analysis_service.py` se usa `concurrent.futures.ThreadPoolExecutor` c
 ```python
 with ThreadPoolExecutor(max_workers=2) as executor:
     future_sentiment = executor.submit(analyze_sentiment, cleaned)
-    future_emotion = executor.submit(analyze_emotion, cleaned)
+    future_tion = executor.submit(analyze_tion, cleaned)
     # Ambas tareas corren al mismo tiempo
 ```
 
@@ -131,7 +131,7 @@ Si en el futuro se quiere hacer fine-tuning, se debe usar early stopping, divisi
       { "label": "negativo", "score": 0.0003 }
     ]
   },
-  "emotion": {
+  "tion": {
     "label": "alegría",
     "score": 0.9234,
     "all_scores": [...]
@@ -151,31 +151,54 @@ Si en el futuro se quiere hacer fine-tuning, se debe usar early stopping, divisi
 
 ## 6. Discusión
 
-### Comparación con enfoques tradicionales
+El análisis automático de sentimientos es un problema ampliamente estudiado dentro del Procesamiento de Lenguaje Natural. Tradicionalmente, se ha abordado con métodos como Naive Bayes, Regresión Logística, Máquinas de Soporte Vectorial y árboles de decisión. Estos métodos pueden funcionar bien en tareas simples, pero suelen requerir limpieza intensiva de datos, extracción manual de características y representación del texto mediante técnicas como Bag of Words o TF-IDF.
+
+En contraste, los modelos basados en transformers, como BERT, DistilBERT y RoBERTa, aprenden representaciones contextuales del lenguaje. Esto significa que pueden interpretar mejor el significado de una palabra según la frase donde aparece. Por ejemplo, la palabra "great" puede tener una connotación positiva en una reseña común, pero podría ser irónica en otro contexto. Aunque estos modelos no resuelven perfectamente la ironía, suelen superar a los métodos tradicionales en muchas tareas de clasificación de texto.
+
+### Comparación con trabajos y enfoques relacionados
 
 | Enfoque | Ventajas | Desventajas |
-|---------|----------|-------------|
-| Naive Bayes / SVM | Rápido, interpretable | Requiere ingeniería de features manual |
-| BERT / RoBERTa (fine-tuning) | Alta precisión | Costoso en datos y computación |
-| **Modelos preentrenados (este proyecto)** | Listo para usar, alta precisión sin entrenamiento propio | Limitado al dominio del preentrenamiento |
+|--------|----------|-------------|
+| Naive Bayes | Rápido, simple y fácil de explicar. | Depende mucho de la frecuencia de palabras y no entiende bien el contexto. |
+| SVM con TF-IDF | Buen rendimiento en clasificación clásica de texto. | Requiere ingeniería de características y no captura contexto profundo. |
+| Redes neuronales recurrentes | Capturan secuencia y orden de palabras. | Son más lentas de entrenar y han sido superadas por transformers en muchas tareas. |
+| BERT y RoBERTa con fine-tuning | Alta precisión y comprensión contextual. | Requieren más recursos computacionales si se entrenan o ajustan. |
+| Modelos preentrenados usados enIntesamentIA | Permiten construir una solución funcional sin entrenamiento propio. | Dependen del dominio y del idioma usado en el preentrenamiento. |
 
-### Limitaciones del sistema
-- Los modelos están en inglés; reseñas en español tendrán peor desempeño
-- El modelo de sentimiento solo clasifica entre positivo y negativo (no neutral en SST-2)
-- La explicación usa plantillas, no IA generativa (es determinista)
-- El sistema no aprende con el uso (sin feedback loop)
+### Análisis crítico de resultados
+
+IntesamentIA logra una solución funcional y práctica para analizar reseñas en tiempo real. Su principal fortaleza es el uso de modelos preentrenados, lo cual permite obtener resultados competitivos sin recolectar ni etiquetar un dataset propio. Además, la integración con Angular permite que el usuario interactúe directamente con el sistema, cumpliendo el requisito de interfaz funcional.
+
+Sin embargo, el sistema tiene limitaciones importantes. Los modelos seleccionados funcionan mejor en inglés, por lo que las reseñas en español pueden generar resultados menos confiables. Además, el modelo de sentimiento elegido clasifica principalmente entre positivo y negativo, por lo que la categoría neutral puede requerir reglas adicionales o un modelo diferente. También debe considerarse que la explicación generada por el sistema es basada en plantillas y no corresponde a una interpretación interna exacta del modelo.
+
+### Limitaciones
+
+- Los modelos seleccionados tienen mejor desempeño en textos en inglés.
+- El análisis de sentimiento puede no manejar correctamente sarcasmo o ironía.
+- El dominio del dataset SST-2 está relacionado principalmente con frases de películas.
+- El sistema no aprende automáticamente de nuevas reseñas ingresadas por usuarios.
+- Las explicaciones son aproximadas y generadas mediante reglas simples.
+- El análisis neutral puede requerir un modelo multiclase especializado.
+
+### Mejoras futuras
+
+- Usar un modelo multilingüe para soportar mejor reseñas en español.
+- Agregar un modelo de sentimiento con tres clases: positivo, neutral y negativo.
+- Incorporar una base de datos para almacenar análisis históricos.
+- Permitir carga de archivos CSV con múltiples reseñas.
+- Agregar comparación entre resultados de diferentes modelos.
+- Implementar fine-tuning opcional con early stopping y validación 80/20.
+- Incorporar un bot de apoyo basado en reglas para explicar términos y resultados.
 
 ---
 
 ## 7. Conclusiones
 
-EmoReview demuestra que es posible construir un sistema funcional de análisis de sentimientos y emociones reutilizando modelos preentrenados de Hugging Face, sin necesidad de entrenar desde cero. El uso de paralelismo con `ThreadPoolExecutor` reduce el tiempo de respuesta. La arquitectura modular (FastAPI + Angular) facilita el mantenimiento y la extensión del sistema.
+IntesamentIA demuestra que es posible construir una aplicación funcional de Inteligencia Artificial para análisis de reseñas utilizando modelos preentrenados. El proyecto integra Procesamiento de Lenguaje Natural, aprendizaje automático, redes neuronales, evaluación con métricas, paralelismo e interfaz de usuario.
 
-**Mejoras futuras**:
-- Agregar soporte multilingüe con modelos como `cardiffnlp/twitter-xlm-roberta-base-sentiment`
-- Implementar historial de análisis con base de datos
-- Agregar fine-tuning opcional con early stopping
-- Desplegar en la nube (Railway, Vercel, etc.)
+La arquitectura con FastAPI y Angular permite separar responsabilidades: el backend se encarga del procesamiento inteligente y el frontend se enfoca en la experiencia del usuario. Además, el uso de modelos preentrenados reduce la complejidad del desarrollo y evita la necesidad de entrenar modelos desde cero.
+
+El proyecto cumple con los requisitos del curso porque presenta un problema real, define un objetivo claro, propone una metodología completa, implementa una solución funcional, reporta resultados medibles y analiza críticamente sus ventajas y limitaciones frente al estado del arte.
 
 ---
 
@@ -223,7 +246,7 @@ uvicorn app.main:app --reload
 
 La primera vez descargará los modelos de Hugging Face (~300MB). Esperar el mensaje:
 ```
-Modelos cargados correctamente. EmoReview API lista.
+Modelos cargados correctamente. IntesamentIA API lista.
 ```
 
 Backend disponible en: `http://localhost:8000`  
