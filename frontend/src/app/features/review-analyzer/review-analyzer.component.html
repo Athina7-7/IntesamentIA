@@ -1,0 +1,143 @@
+<!-- review-analyzer.component.html: Plantilla del componente principal de EmoReview -->
+
+<div class="analyzer-container">
+
+  <!-- ===== ENCABEZADO ===== -->
+  <header class="app-header">
+    <div class="header-badge">IA · NLP · Emociones</div>
+    <h1 class="app-title">
+      <span class="title-accent">Emo</span>Review
+    </h1>
+    <p class="app-subtitle">Analizador inteligente de emociones y sentimiento en reseñas</p>
+  </header>
+
+  <!-- ===== FORMULARIO DE ANÁLISIS ===== -->
+  <section class="input-section">
+    <label class="input-label" for="reviewInput">
+      Escribe tu reseña en inglés
+      <span class="label-hint">(el modelo está optimizado para inglés)</span>
+    </label>
+
+    <!-- [(ngModel)] hace two-way data binding: vincula reviewText con el textarea -->
+    <textarea
+      id="reviewInput"
+      class="review-textarea"
+      [(ngModel)]="reviewText"
+      placeholder="Ej: The food was absolutely amazing! The service was friendly and the atmosphere was wonderful. I will definitely come back."
+      rows="5"
+    ></textarea>
+
+    <div class="button-group">
+      <!-- Botón principal: llama a analyzeReview() y se deshabilita mientras carga -->
+      <button
+        class="btn-primary"
+        (click)="analyzeReview()"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">🔍 Analizar reseña</span>
+        <span *ngIf="isLoading" class="loading-text">
+          <span class="spinner"></span> Analizando...
+        </span>
+      </button>
+
+      <!-- Botón secundario para limpiar el formulario -->
+      <button class="btn-secondary" (click)="clearForm()" *ngIf="analysisResult">
+        ↺ Nueva reseña
+      </button>
+    </div>
+
+    <!-- Mensaje de error si algo falla -->
+    <div class="error-message" *ngIf="errorMessage">
+      ⚠️ {{ errorMessage }}
+    </div>
+  </section>
+
+  <!-- ===== RESULTADOS (solo visible cuando hay respuesta del backend) ===== -->
+  <!-- *ngIf verifica que analysisResult no sea null antes de renderizar -->
+  <section class="results-section" *ngIf="analysisResult">
+
+    <!-- Tiempo de procesamiento -->
+    <div class="processing-time">
+      ⚡ Procesado en {{ analysisResult.processing_time_seconds }}s (con paralelismo)
+    </div>
+
+    <!-- Tarjetas de resultado principal -->
+    <div class="cards-grid">
+      <!-- Tarjeta de sentimiento: recibe datos via @Input() -->
+      <app-result-card
+        title="Sentimiento"
+        [label]="analysisResult.sentiment.label"
+        [score]="analysisResult.sentiment.score"
+        [colorClass]="getSentimentColorClass()"
+      ></app-result-card>
+
+      <!-- Tarjeta de emoción -->
+      <app-result-card
+        title="Emoción dominante"
+        [label]="analysisResult.emotion.label"
+        [score]="analysisResult.emotion.score"
+        colorClass="emotion"
+      ></app-result-card>
+    </div>
+
+    <!-- Gráficos de confianza -->
+    <div class="charts-grid">
+      <app-confidence-chart
+        [scores]="analysisResult.sentiment.all_scores"
+        chartTitle="Distribución de Sentimientos"
+        barColor="#6366f1"
+      ></app-confidence-chart>
+
+      <app-confidence-chart
+        [scores]="analysisResult.emotion.all_scores"
+        chartTitle="Distribución de Emociones"
+        barColor="#a78bfa"
+      ></app-confidence-chart>
+    </div>
+
+    <!-- Sección de explicación generada por el backend -->
+    <div class="explanation-card">
+      <div class="section-label">💡 Explicación del análisis</div>
+      <p class="explanation-text">{{ analysisResult.explanation }}</p>
+    </div>
+
+    <!-- Texto limpiado -->
+    <div class="cleaned-text-card">
+      <div class="section-label">🔧 Texto procesado por el modelo</div>
+      <p class="cleaned-text">{{ analysisResult.cleaned_text }}</p>
+    </div>
+
+  </section>
+
+  <!-- ===== INFORMACIÓN DEL DATASET ===== -->
+  <section class="dataset-section">
+    <div class="section-label">📊 Dataset utilizado</div>
+    <div class="dataset-grid">
+      <div class="dataset-item">
+        <span class="dataset-key">Nombre</span>
+        <span class="dataset-value">SST-2 (Stanford Sentiment Treebank)</span>
+      </div>
+      <div class="dataset-item">
+        <span class="dataset-key">Fuente</span>
+        <span class="dataset-value">Hugging Face Datasets (glue/sst2)</span>
+      </div>
+      <div class="dataset-item">
+        <span class="dataset-key">Contenido</span>
+        <span class="dataset-value">Reseñas de películas en inglés, etiquetadas como positivas o negativas</span>
+      </div>
+      <div class="dataset-item">
+        <span class="dataset-key">División</span>
+        <span class="dataset-value">80% entrenamiento · 20% validación/test</span>
+      </div>
+      <div class="dataset-item">
+        <span class="dataset-key">Uso en el proyecto</span>
+        <span class="dataset-value">Evaluación de métricas (accuracy, F1) sobre una muestra de 100 ejemplos</span>
+      </div>
+      <div class="dataset-item">
+        <span class="dataset-key">Modelos usados</span>
+        <span class="dataset-value">distilbert-sst2 (sentimiento) · emotion-distilroberta (emociones)</span>
+      </div>
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,12 @@
+// confidence-chart.component.scss
+
+.chart-wrapper {
+  background: var(--card-bg, #1e2235);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.5rem;
+
+  canvas {
+    max-height: 220px;
+  }
+}

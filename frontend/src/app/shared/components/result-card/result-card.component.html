@@ -1,0 +1,10 @@
+<!-- result-card.component.html: Plantilla visual para la tarjeta de resultado -->
+<div class="result-card" [ngClass]="colorClass">
+  <div class="card-title">{{ title }}</div>
+  <div class="card-label">{{ label }}</div>
+  <div class="card-score">Confianza: {{ scorePercent }}</div>
+  <!-- Barra de progreso visual que representa la confianza -->
+  <div class="progress-bar-container">
+    <div class="progress-bar-fill" [style.width]="scorePercent"></div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+/* styles.scss: Estilos globales de la aplicación EmoReview */
+
+/* Reset básico: elimina márgenes y paddings por defecto del navegador */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  /* Fondo oscuro global */
+  background-color: #0d1117;
+  color: #f1f5f9;
+  /* Usar la fuente Outfit (sans-serif de Google Fonts) */
+  font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar personalizada para navegadores Chromium */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d3748;
+  border-radius: 99px;
+}
