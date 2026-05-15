@@ -23,18 +23,18 @@ Desarrollar una aplicación web llamada **EmoReview** que, mediante modelos pree
 
 ```mermaid
 flowchart TD
-    A[👤 Usuario escribe reseña en Angular] --> B[📤 Angular envía POST a FastAPI]
-    B --> C[🔍 FastAPI recibe texto en /api/reviews/analyze]
-    C --> D[🧹 Limpieza básica del texto]
-    D --> E{⚡ Procesamiento paralelo con ThreadPoolExecutor}
-    E --> F[🎭 Análisis de Sentimiento\ndistilbert-sst2]
-    E --> G[💜 Análisis de Emociones\nemotion-distilroberta]
-    F --> H[✅ Resultado: positivo/negativo/neutral + scores]
-    G --> I[✅ Resultado: alegría/enojo/tristeza + scores]
-    H --> J[📝 Generación de explicación]
+    A[ Usuario escribe reseña en Angular] --> B[ Angular envía POST a FastAPI]
+    B --> C[ FastAPI recibe texto en /api/reviews/analyze]
+    C --> D[ Limpieza básica del texto]
+    D --> E{ Procesamiento paralelo con ThreadPoolExecutor}
+    E --> F[ Análisis de Sentimiento\ndistilbert-sst2]
+    E --> G[ Análisis de Emociones\nemotion-distilroberta]
+    F --> H[ Resultado: positivo/negativo/neutral + scores]
+    G --> I[ Resultado: alegría/enojo/tristeza + scores]
+    H --> J[ Generación de explicación]
     I --> J
-    J --> K[📦 Respuesta JSON ensamblada]
-    K --> L[📊 Angular muestra tarjetas + gráficos + explicación]
+    J --> K[ Respuesta JSON ensamblada]
+    K --> L[ Angular muestra tarjetas + gráficos + explicación]
 ```
 
 ---
@@ -216,7 +216,8 @@ npm install
 
 ```bash
 cd backend
-source venv/bin/activate  # o venv\Scripts\activate en Windows
+venv\Scripts\activate
+source venv/bin/activate   
 uvicorn app.main:app --reload
 ```
 

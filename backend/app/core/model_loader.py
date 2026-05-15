@@ -23,6 +23,7 @@ def load_models():
     # pipeline("text-classification") descarga automáticamente el modelo desde Hugging Face Hub
     # la primera vez; en ejecuciones posteriores lo usa desde caché local
     _sentiment_pipeline = pipeline(
+    # Es el tipo de tarea que para la cual será usado el modelo
         "text-classification",
         model=SENTIMENT_MODEL_NAME,
         return_all_scores=True  # Retorna las puntuaciones de TODAS las clases, no solo la más alta

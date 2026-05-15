@@ -10,7 +10,7 @@ from app.routes.review_routes import router as review_router
 # Crear la instancia principal de la aplicación FastAPI
 # title y description aparecen en la documentación automática /docs
 app = FastAPI(
-    title="EmoReview API",
+    title="IntensamentIA API",
     description="Analizador inteligente de emociones y sentimiento en reseñas",
     version="1.0.0"
 )
