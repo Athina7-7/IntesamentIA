@@ -1,4 +1,4 @@
-# IntesamenIA 
+# IntensamentIA 
 ### Analizador inteligente de emociones y sentimiento en reseñas
 
 ---
